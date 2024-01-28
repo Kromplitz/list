@@ -19,9 +19,9 @@ class MainActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe ( {
-                         if (it.world.heroes.isNotEmpty()){
-                             val items = it.world.heroes
-                             val adapter = RecyclerViewAdapter(items as List<Hero>) {
+                         if ( it.isNotEmpty()){
+
+                             val adapter = RecyclerViewAdapter(it as List<Hero>) {
                                  Toast.makeText(this, "clicked", Toast.LENGTH_LONG).show()
                              }
                              recyclerView.adapter = adapter
@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this,"Error ${it.message}", Toast.LENGTH_LONG).show()
 
         })
-
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 

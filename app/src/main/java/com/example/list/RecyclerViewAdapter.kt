@@ -28,7 +28,6 @@ class RecyclerViewAdapter(val items: List<Hero>, function: () -> Unit):RecyclerV
     }
 }
 
-
 class RecyclerViewHolder (itemView:View):RecyclerView.ViewHolder(itemView){
     val title: TextView = itemView.findViewById(R.id.listTitle)
     val image: ImageView = itemView.findViewById(R.id.listImage)
