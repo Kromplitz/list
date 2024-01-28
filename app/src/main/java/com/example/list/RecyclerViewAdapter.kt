@@ -22,7 +22,7 @@ class RecyclerViewAdapter(val items: List<Hero>, function: () -> Unit):RecyclerV
 
         holder.title.text = items[position].name
        Glide.with(holder.itemView.context)
-           .load(items[position].images[position].md)
+           .load(items[position].images.md)
            .into(holder.image)
 
     }

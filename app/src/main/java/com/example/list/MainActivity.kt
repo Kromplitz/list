@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val recyclerView:RecyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         val api = ApiClient.client.create(ApiInterface::class.java)
         api.getHeroes()
             .subscribeOn(Schedulers.io())
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
                          if ( it.isNotEmpty()){
 
                              val adapter = RecyclerViewAdapter(it as List<Hero>) {
-                                 Toast.makeText(this, "clicked", Toast.LENGTH_LONG).show()
+                                 //Toast.makeText(this, "clicked", Toast.LENGTH_LONG).show()
                              }
                              recyclerView.adapter = adapter
                          }
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
+
 
 
     }
