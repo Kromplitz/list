@@ -20,17 +20,17 @@ class MyViewModel:ViewModel() {
                 if (response?.name!= null && response?.images!=null) {
                     withContext(Dispatchers.Main) {
                         _uiState.postValue(
-                            UIState.Result("${response.name} ${response.images}"))
-                    }
-                } else
+                           UIState.Result (response?.heroes}
+                } else {
                     _uiState.postValue(UIState.Error("Error"))
+                }
             }
         }
     }
     sealed class UIState {
         object Empty : UIState()
         object Processing : UIState()
-        class Result(val title: String) : UIState()
+        class Result( val heroes: List<Hero>) : UIState()
         class Error(val description: String) : UIState()
     }
 
