@@ -19,11 +19,11 @@ class MyViewModel @Inject constructor(val repo:Repository) :ViewModel() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
 
-                val response = repo.getHeroByName("name", "images")
-                if (response?.name!= null && response?.images!=null) {
+                val response = repo.getHeroByName()
+                if (response != null && response.isNotEmpty()) {
                     withContext(Dispatchers.Main) {
                         _uiState.postValue(
-                           UIState.Result (response?.heroes}
+                           UIState.Result (response))}
                 } else {
                     _uiState.postValue(UIState.Error("Error"))
                 }

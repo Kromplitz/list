@@ -11,5 +11,5 @@ import retrofit2.http.Path
 
 interface ApiInterface {
     @GET("/superhero-api/api/all.json")
-    suspend fun getHeroes(@Path("all") name: String, images: String):List<Hero>?
+    suspend fun getHeroes():List<Hero>?
 }

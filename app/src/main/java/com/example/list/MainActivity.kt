@@ -12,12 +12,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var viewModel: MyViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        @Inject
-        lateinit var viewModel: MyViewModel
 
         val recyclerView:RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.uiState.observe(this){
             when(it){
                 is MyViewModel.UIState.Empty -> Toast.makeText(this, "Empty", Toast.LENGTH_LONG).show()
-                is MyViewModel.UIState.Result -> {val adapter = RecyclerViewAdapter(MyViewModel.UIState.Result)
+                is MyViewModel.UIState.Result -> {val adapter = RecyclerViewAdapter(it.heroes)
                     recyclerView.adapter = adapter }
                 is MyViewModel.UIState.Processing ->  Toast.makeText(this, "Processing", Toast.LENGTH_LONG).show()
                 is MyViewModel.UIState.Error -> Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
