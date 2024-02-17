@@ -6,16 +6,24 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        @Inject
+        lateinit var viewModel: MyViewModel
+
         val recyclerView:RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
+
+        //val viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
         viewModel.getData()
         viewModel.uiState.observe(this){
             when(it){

@@ -7,15 +7,18 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MyViewModel:ViewModel() {
+class MyViewModel @Inject constructor(val repo:Repository) :ViewModel() {
     private val _uiState = MutableLiveData<UIState>(UIState.Empty)
     val uiState: LiveData<UIState> = _uiState
-    private val repo = MyApplication.getApp().repo
+
+
     fun getData() {
         _uiState.value = UIState.Processing
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
+
                 val response = repo.getHeroByName("name", "images")
                 if (response?.name!= null && response?.images!=null) {
                     withContext(Dispatchers.Main) {
@@ -35,3 +38,5 @@ class MyViewModel:ViewModel() {
     }
 
 }
+
+
