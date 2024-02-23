@@ -63,6 +63,10 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
+    //TEST
+    testImplementation("org.mockito:mockito-core:5.5.0")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 
     //HILT
     implementation ("com.google.dagger:hilt-android:2.46.1")

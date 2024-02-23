@@ -33,7 +33,7 @@ class MyViewModel @Inject constructor(val repo:Repository) :ViewModel() {
     sealed class UIState {
         object Empty : UIState()
         object Processing : UIState()
-        class Result( val heroes: List<Hero>) : UIState()
+        class Result(val heroes: List<Hero>) : UIState(), List<Hero>
         class Error(val description: String) : UIState()
     }
 
