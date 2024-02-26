@@ -20,7 +20,7 @@ class MyViewModel @Inject constructor(val repo:Repository) :ViewModel() {
             withContext(Dispatchers.IO) {
 
                 val response = repo.getHeroByName()
-                if (response != null && response.isNotEmpty()) {
+                if ((response != null) && response.isNotEmpty()) {
                     withContext(Dispatchers.Main) {
                         _uiState.postValue(
                            UIState.Result (response))}
@@ -33,7 +33,7 @@ class MyViewModel @Inject constructor(val repo:Repository) :ViewModel() {
     sealed class UIState {
         object Empty : UIState()
         object Processing : UIState()
-        class Result(val heroes: List<Hero>) : UIState(), List<Hero>
+        class Result(val heroes: List<Hero>) : UIState()
         class Error(val description: String) : UIState()
     }
 

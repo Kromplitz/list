@@ -2,6 +2,7 @@ package com.example.list
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
@@ -26,38 +27,42 @@ class MyViewModelTest{
          val repository = Mockito.mock(Repository::class.java)
 
          val herolist = mutableListOf<Hero>()
-         val successfulResponse = herolist
+         herolist.add(Hero("Batman", Image ("","","","")))
+
          val viewModel = MyViewModel(repository)
          val eventList = mutableListOf<MyViewModel.UIState>()
          viewModel.uiState.observeForever {
              eventList.add(it)}
              runBlocking {
-                 Mockito.`when`(repository.getHeroByName()).thenReturn(successfulResponse)
+                 Mockito.`when`(repository.getHeroByName()).thenReturn(herolist)
+                 viewModel.getData()
+                 delay(10)
              }
 
-         viewModel.getData()
+
          Assert.assertEquals(MyViewModel.UIState.Empty, eventList[0])
          Assert.assertEquals(MyViewModel.UIState.Processing, eventList[1])
          val heroResult = eventList[2] as MyViewModel.UIState.Result
-        // Assert.assertEquals("Batman", Hero.name)
+        Assert.assertEquals(false, heroResult.heroes.isNullOrEmpty())
      }
 
     @Test
     fun getNullResponse(){
         val repository = Mockito.mock(Repository::class.java)
-        val herolist = mutableListOf<Hero>()
-        val nullResponse = mutableListOf<Hero>().isNullOrEmpty()
         val viewModel = MyViewModel(repository)
         val eventList = mutableListOf<MyViewModel.UIState>()
         viewModel.uiState.observeForever {
             eventList.add(it)}
         runBlocking {
-            Mockito.`when`(repository.getHeroByName()).thenReturn(nullResponse)
+            Mockito.`when`(repository.getHeroByName()).thenReturn(null)
+            viewModel.getData()
+            delay(10)
         }
 
         Assert.assertEquals(MyViewModel.UIState.Empty, eventList[0])
         Assert.assertEquals(MyViewModel.UIState.Processing, eventList[1])
         val nullResult = eventList[2] as MyViewModel.UIState.Error
+        Assert.assertEquals("Error", nullResult.description)
 
     }
 
